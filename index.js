@@ -36,13 +36,33 @@ const getData = async () => {
 const createProduct = (product, row) => {
     
 
-    row.innerHTML += ` <div class="card col-3">
+    row.innerHTML += ` <div id="${product._id}" class="card col-3">
                             <img src="${product.imageUrl}" class="card-img-top" alt="...">
                             <div class="card-body">
                                 <h5 class="card-title">${product.name}</h5>
                                 <p class="card-text">${product.description}</p>
                                 <a href="#" class="btn btn-primary">€${product.price}</a>
+                                <a href="/backoffice.html?productId=${product._id}" class="btn btn-primary">Edit</a>
+                                <button type="button" class="btn btn-primary" onclick="deleteProduct(event)">delete</button>
                             </div>
                         </div>
                     `
+}
+
+const sendEditInforURL = () => {
+
+}
+
+const deleteProduct = (event) => {
+    let id = event.target.closest('.card').id
+    console.log(id)
+    fetch('https://striveschool-api.herokuapp.com/api/product/' + id, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjU2YmQxZGE5MDIzOTAwMTVkOTY1YzgiLCJpYXQiOjE2NDk4NTE2NzcsImV4cCI6MTY1MTA2MTI3N30.K2GETfU9WC5AqVtF5vXMgGcBW4A-AYjnC8rZPl53d_U'
+        }
+        })
+
+    alert('successfully deleted')
+    location.replace('/')
 }

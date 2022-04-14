@@ -48,3 +48,43 @@ const removeDefault = () => {
         e.preventDefault();
     })
 }
+
+
+
+let existingProduct = {
+    name: document.getElementById('name').value,
+    description: document.getElementById('description').value,
+    brand: document.getElementById('brand').value,
+    imageUrl: document.getElementById('image-URL').value,
+    price: document.getElementById('price').value
+}
+const editProduct = async () => {
+    existingProduct = {
+        name: document.getElementById('name').value,
+        description: document.getElementById('description').value,
+        brand: document.getElementById('brand').value,
+        imageUrl: document.getElementById('image-URL').value,
+        price: document.getElementById('price').value
+    }
+    let searchParams = new URLSearchParams(window.location.search)
+    let productID = searchParams.get('productId')
+    console.log(productID)
+    if (productID) {
+        const response = await fetch('https://striveschool-api.herokuapp.com/api/product/' + productID, {
+        method: 'PUT',
+        body: JSON.stringify(existingProduct),
+        headers: {
+            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjU2YmQxZGE5MDIzOTAwMTVkOTY1YzgiLCJpYXQiOjE2NDk4NTE2NzcsImV4cCI6MTY1MTA2MTI3N30.K2GETfU9WC5AqVtF5vXMgGcBW4A-AYjnC8rZPl53d_U',
+            'Content-Type': 'application/json'
+        }
+        
+    })
+    } else {
+        console.log(false)
+    }
+
+    alert('successfully edited')
+    console.log(existingProduct)
+
+
+}
